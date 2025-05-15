@@ -3,6 +3,8 @@ import maplibregl from 'maplibre-gl'
 import { useEffect, useRef } from 'react'
 
 interface Props {
+  width?: string;
+  height?: string;
   longitude: number;
   latitude: number;
   zoom?: number;
@@ -10,7 +12,7 @@ interface Props {
   title?: string;
 }
 
-const Maps = ({longitude, latitude, zoom=13, marker=false, title=''}: Props) => {
+const Maps = ({longitude, latitude, zoom=13, marker=false, title='', width='100%', height='90vh'}: Props) => {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<maplibregl.Map>(null)
 
@@ -35,7 +37,8 @@ const Maps = ({longitude, latitude, zoom=13, marker=false, title=''}: Props) => 
   return (
     <div
       ref={mapContainer}
-      style={{ width: '100vw', height: '100vh' }}
+      className='rounded-lg shadow-neutral-400 shadow'
+      style={{ width, height }}
     />
   )
 };
