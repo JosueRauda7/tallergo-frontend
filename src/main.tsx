@@ -3,11 +3,14 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { GeolocationContextProvider } from './context/GeolocationContext.tsx'
+import { LoginContextProvider } from './context/LoginContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <GeolocationContextProvider>
-      <App />
-    </GeolocationContextProvider>
+    <LoginContextProvider>
+      <GeolocationContextProvider>
+        <App />
+      </GeolocationContextProvider>
+    </LoginContextProvider>
   </StrictMode>,
 )
