@@ -4,12 +4,15 @@ import './index.css'
 import App from './App.tsx'
 import { GeolocationContextProvider } from './context/GeolocationContext.tsx'
 import { LoginContextProvider } from './context/LoginContext.tsx'
+import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <LoginContextProvider>
       <GeolocationContextProvider>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </GeolocationContextProvider>
     </LoginContextProvider>
   </StrictMode>,

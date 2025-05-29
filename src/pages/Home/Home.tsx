@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import GoogleMapsButton from "../components/GoogleMapsButton/GoogleMapsButton";
-import Maps from "../components/Maps/Maps";
-import WazeButton from "../components/WazeButton/WazeButton";
-import { GeolocationContext } from "../context/GeolocationContext";
+import Maps from "../../components/Maps/Maps";
+import GoogleMapsButton from "../../components/GoogleMapsButton/GoogleMapsButton";
+import WazeButton from "../../components/WazeButton/WazeButton";
+import { GeolocationContext } from "../../context/GeolocationContext";
 
 const Home = () => {
   const {latitude, longitude} = useContext(GeolocationContext);

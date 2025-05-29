@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Menu.css";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -27,10 +28,10 @@ const Menu = () => {
           {!isMobile && showMenu && (
             <ul className="lg:flex lg:flex-row md:flex-row sm:flex-col space-x-4">
                 <>
-                  <li className="nav-option-desktop text-gray-100 hover:text-shadow-2xs hover:text-white cursor-pointer">Inicio</li>
-                  <li className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Talleres</li>
-                  <li className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Acerca de</li>
-                  <li className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Contáctanos</li>
+                  <Link to="/" className="nav-option-desktop text-gray-100 hover:text-shadow-2xs hover:text-white cursor-pointer">Inicio</Link>
+                  <Link to="/talleres" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Talleres</Link>
+                  <Link to="/about-us" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Acerca de</Link>
+                  <Link to="/contact-us" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Contáctanos</Link>
                 </>
             </ul>
           )}
