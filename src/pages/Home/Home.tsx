@@ -1,35 +1,51 @@
-import { useContext } from "react";
-import Maps from "../../components/Maps/Maps";
-import GoogleMapsButton from "../../components/GoogleMapsButton/GoogleMapsButton";
-import WazeButton from "../../components/WazeButton/WazeButton";
+import { useContext, useState } from "react";
 import { GeolocationContext } from "../../context/GeolocationContext";
+import Button from "../../components/Button/Button";
+import SearchItem from "../../components/SearchItem/SearchItem";
+import MainContainer from "../../components/Layout/MainContainer/MainContainer";
 
 const Home = () => {
   const {latitude, longitude} = useContext(GeolocationContext);
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="lg:flex md:flex">
-      <div className="px-4 py-2 md:w-1/2 lg:w-1/2 sm:w-full">
-        <h1 className="lg:text-4xl md:text-4xl sm: text-2xl font-bold text-left">
-          Taller Jefferson Gutierritos
-        </h1>
-        <h2 className="text-md font-medium text-left">
-          Taller de mecánica automotriz, especializado en la reparación y mantenimiento de vehículos.
-        </h2>
-        <p className="text-sm text-left mt-3">
-          Taller Jefferson Gutierritos es un taller mecánico especializado en la reparación y mantenimiento de vehículos. Con años
-          de experiencia en el sector, ofrecemos servicios de alta calidad para garantizar el óptimo funcionamiento de su automóvil.
-          Nuestro equipo de mecánicos altamente capacitados está listo para atender cualquier problema que pueda tener su vehículo.
+    <MainContainer>
+      <div>
+        <h1 className="text-4xl font-bold text-center">Bienvenido a TallerGO</h1>
+        <p className="text-md text-center mt-2">
+          Encuentra el mejor servicio mecánico cerca de ti.
         </p>
-      </div>
-      <div className="px-4 py-2 md:w-1/2 lg:w-1/2 sm:w-full ">
-        <Maps longitude={-89.12497} latitude={13.72674} width="100%" height="80vh" marker title="Casa" />
-        <div className="flex justify-center mt-2">
-          <GoogleMapsButton origin={`${latitude},${longitude}`} destination="13.72674,-89.12497" />
-          <WazeButton longitude={longitude} latitude={latitude} />
+        <div className="flex mt-4">
+          <input
+            type="text"
+            placeholder="Buscar"
+            className="flex-10/12 p-2 border border-gray-300 rounded"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+          />
+          <Button onClick={() => console.log(searchQuery)} className="flex-2/12 ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            Buscar
+          </Button>
         </div>
       </div>
-    </div>
+      <div className="mt-6 py-6 bg-gray-200">
+        <h1 className="text-4xl font-bold text-center">Resultados de búsqueda</h1>
+        <p className="text-md text-center mt-2">
+          Aquí aparecerán los talleres cercanos a tu ubicación.
+        </p>
+        <div className="mt-4 px-4">
+          <SearchItem title="Taller Jefferson Gutierritos"
+            description="Taller especializado en mecánica general y electrónica automotriz."
+            distance={1.2}
+            businessName="Jefferson Gutierritos And Company"
+            labels={["Mecánica", "Electrónica"]}
+            isSalingProducts
+            isService
+            onClick={() => console.log("Taller seleccionado")}
+          />
+        </div>
+      </div>
+    </MainContainer>
   );
 };
 
