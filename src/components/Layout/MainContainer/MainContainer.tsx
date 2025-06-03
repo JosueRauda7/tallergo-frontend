@@ -1,5 +1,3 @@
-import Footer from "../../Footer/Footer";
-
 interface Props {
   children?: React.ReactNode;
 }

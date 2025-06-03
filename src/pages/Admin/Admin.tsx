@@ -19,19 +19,19 @@ const Admin = () => {
         <div className="flex space-x-4 mt-4 w-full flex-wrap">
           {userType === "ADMIN" &&
             (<>
-              <Link to="/admin/empresas">
+              <Link to="/administrar/empresas">
                 <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                   Administrar Empresas
                 </button>
               </Link>
-              <Link to="/admin/talleres">
+              <Link to="/administrar/talleres">
                 <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                   Administrar Tipos Talleres
                 </button>
               </Link>
             </>)
           }
-          <Link to="/admin/talleres">
+          <Link to="/administrar/talleres">
             <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
               Administrar Talleres
             </button>
@@ -48,12 +48,12 @@ const Admin = () => {
                   Aquí puedes administrar los usuarios registrados en la aplicación.
                 </p>
                 <div className="flex space-x-4 mt-4 w-full flex-wrap">
-                  <Link to="/admin/tipo-usuarios">
+                  <Link to="/administrar/tipo-usuarios">
                     <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                       Administrar Tipos de Usuarios
                     </button>
                   </Link>
-                  <Link to="/admin/usuarios">
+                  <Link to="/administrar/usuarios">
                     <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                       Administrar Usuarios
                     </button>
@@ -68,12 +68,12 @@ const Admin = () => {
                   Aquí puedes administrar las categorías de los talleres.
                 </p>
                 <div className="flex space-x-4 mt-4 w-full flex-wrap">
-                  <Link to="/admin/tipo-usuarios">
+                  <Link to="/administrar/tipo-usuarios">
                     <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                       Administrar Categorías
                     </button>
                   </Link>
-                  <Link to="/admin/usuarios">
+                  <Link to="/administrar/usuarios">
                     <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                       Administrar Sub Categorías
                     </button>
@@ -93,17 +93,17 @@ const Admin = () => {
                 Aquí puedes administrar los servicios y productos ofrecidos.
               </p>
               <div className="flex space-x-4 mt-4 w-full flex-wrap">
-                <Link to="/admin/1/servicios">
+                <Link to="/administrar/1/servicios">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Servicios
                   </button>
                 </Link>
-                <Link to="/admin/1/productos">
+                <Link to="/administrar/1/productos">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Productos
                   </button>
                 </Link>
-                <Link to="/admin/1/promociones">
+                <Link to="/administrar/1/promociones">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Promociones
                   </button>
@@ -118,12 +118,12 @@ const Admin = () => {
                 Aquí puedes administrar las etiquetas y marcas de los talleres.
               </p>
               <div className="flex space-x-4 mt-4 w-full flex-wrap">
-                <Link to="/admin/tipo-usuarios">
+                <Link to="/administrar/tipo-usuarios">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Etiquetas
                   </button>
                 </Link>
-                <Link to="/admin/usuarios">
+                <Link to="/administrar/usuarios">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Marcas
                   </button>

@@ -5,6 +5,7 @@ import GoogleMapsButton from "../../../components/GoogleMapsButton/GoogleMapsBut
 import WazeButton from "../../../components/WazeButton/WazeButton";
 import Button from "../../../components/Button/Button";
 import MainContainer from "../../../components/Layout/MainContainer/MainContainer";
+import type { MapMouseEvent } from "maplibre-gl";
 
 const GarageDetail = () => {
   const {latitude, longitude} = useContext(GeolocationContext);
@@ -29,23 +30,23 @@ const GarageDetail = () => {
           </p>
         </div>
         <div className="px-4 py-2 md:w-1/2 lg:w-1/2 sm:w-full ">
-          <Maps longitude={-89.12497} latitude={13.72674} width="100%" height="70vh" marker localLotationAction={() => {
-            setLatitudeToGo(null);
-            setLongitudeToGo(null);
-            setMarkerSelected(null);
+          <Maps longitude={longitude} latitude={latitude} width="100%" height="70vh" marker localLotationAction={() => {
+            // setLatitudeToGo(null);
+            // setLongitudeToGo(null);
+            // setMarkerSelected(null);
           }}
           tapOutAction={() => {
-            setLatitudeToGo(null);
-            setLongitudeToGo(null);
-            setMarkerSelected(null);
+            // setLatitudeToGo(null);
+            // setLongitudeToGo(null);
+            // setMarkerSelected(null);
           }}
           mapMarkers={[{
-            latitude: 13.718558972506168,
-            longitude: -89.12745771077233,
+            latitude: latitudeToGo ?? latitude,
+            longitude: longitudeToGo ?? longitude,
             title: "Taller Jefferson Gutierritos",
             action: () => {
-              setLatitudeToGo(13.719184337717929);
-              setLongitudeToGo(-89.1272002187282);
+              setLatitudeToGo(13.7034);
+              setLongitudeToGo(-89.2034);
               setMarkerSelected("Taller Jefferson Gutierritos");
             }
           }]} />

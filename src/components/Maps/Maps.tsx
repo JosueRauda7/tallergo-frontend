@@ -6,7 +6,7 @@ export interface MapMarker {
   longitude: number;
   latitude: number;
   title: string;
-  action: () => void;
+  action: (e) => void;
 }
 
 interface Props {
@@ -16,17 +16,22 @@ interface Props {
   latitude: number;
   zoom?: number;
   marker?: boolean;
+  tapMarker?: boolean;
   mapMarkers?: MapMarker[];
-  tapOutAction?: () => void;
-  localLotationAction?: () => void;
+  tapOutAction?: (e) => void;
+  localLotationAction?: (e) => void;
 }
 
 const Maps = ({
   longitude, latitude, zoom=13, marker=false, mapMarkers=[], width='100%', height='90vh',
-  localLotationAction = () => {}, tapOutAction = () => {}
+  tapMarker=false, localLotationAction = () => {},
+  tapOutAction = () => {}
 }: Props) => {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<maplibregl.Map>(null)
+  const localMarker = useRef<maplibregl.Marker>(null);
+  const markersRef = useRef<maplibregl.Marker[]>([]);
+  const othersMarkersRef = useRef<maplibregl.Marker[]>([]);
 
   useEffect(() => {
     if (!map.current && mapContainer.current) {
@@ -41,14 +46,31 @@ const Maps = ({
       const localLocationMarker = new maplibregl.Marker()
         .setLngLat([longitude, latitude]) // Slightly offset markers
         .setPopup(new maplibregl.Popup().setHTML("Ubicación actual"))
-        .addTo(map.current)
-      localLocationMarker.getElement().addEventListener('click', () => {
+        .addTo(map.current);
+      localMarker.current = localLocationMarker;
+
+      // Evento para manejar el clic en el marcador de ubicación actual
+      localLocationMarker.getElement().addEventListener('click', (e) => {
         if (marker) {
           map.current?.flyTo({
             center: [longitude, latitude],
             zoom: zoom,
           });
-          localLotationAction();
+        }
+        localLotationAction(e);
+      });
+
+      map.current.on('click', (e) => {
+        tapOutAction(e);
+        if (tapMarker) {
+          markersRef.current.forEach(marker => marker.remove());
+          const newMarker = new maplibregl.Marker({
+            color: 'red'
+          })
+            .setLngLat([e.lngLat.lng, e.lngLat.lat])
+            .setPopup(new maplibregl.Popup().setHTML("Ubicación seleccionada"))
+            .addTo(map.current!);
+          markersRef.current.push(newMarker);
         }
       });
 
@@ -62,8 +84,9 @@ const Maps = ({
             .setPopup(new maplibregl.Popup().setHTML(mapMarker.title))
             .addTo(map.current!);
 
-          newMarker.getElement().addEventListener('click', () => {
-            mapMarker.action();
+          othersMarkersRef.current.push(newMarker);
+          newMarker.getElement().addEventListener('click', (e) => {
+            mapMarker.action(e);
           });
         });
 

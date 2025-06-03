@@ -6,7 +6,7 @@ const ContactUs = () => {
   return (
     <MainContainer>
       <div className="sm:px-10 md:px-24 lg:px-72">
-        <h1 className="text-4xl font-bold py-6 text-center">Contáctanos</h1>
+        <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold py-6 text-center">Contáctanos</h1>
         <p className='text-xl'><b>TallerGO</b> es una plataforma diseñada para conectar a conductores con talleres mecánicos confiables de manera rápida, segura y transparente. Nuestro objetivo es modernizar la forma en que las personas encuentran servicios de mantenimiento automotriz, ofreciendo reseñas reales, disponibilidad en tiempo real y una experiencia digital intuitiva.</p>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 my-6 justify-center align-center'>
           <img src={WomanInGarage1} alt="Mujer en taller mecánico" className="h-auto my-6 rounded-lg shadow-lg" />

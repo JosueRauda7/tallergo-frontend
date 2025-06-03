@@ -33,9 +33,9 @@ const Menu = () => {
                 <>
                   <Link to="/" className="nav-option-desktop text-gray-100 hover:text-shadow-2xs hover:text-white cursor-pointer">Inicio</Link>
                   <Link to="/talleres" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Talleres</Link>
+                  <Link to="/administrar" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Administrar</Link>
                   <Link to="/acerca-de" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Acerca de</Link>
                   <Link to="/contactanos" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Contáctanos</Link>
-                  <Link to="/administrar" className="nav-option-desktop text-gray-50 hover:text-white cursor-pointer">Administrar</Link>
                   <p onClick={() => {
                     logout();
                     navigate('/');
@@ -50,9 +50,9 @@ const Menu = () => {
             <>
               <Link to="/" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Inicio</Link>
               <Link to="/talleres" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Talleres</Link>
+              <Link to="/administrar" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Administrar</Link>
               <Link to="/acerca-de" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Acerca de</Link>
               <Link to="/contactanos" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Contáctanos</Link>
-              <Link to="/administrar" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Administrar</Link>
               <p onClick={() => {
                 logout();
                 navigate('/');
