@@ -16,6 +16,19 @@ const Menu = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setShowMenu(!mobile); // Mostrar menú por defecto en desktop, ocultarlo en mobile
+    };
+
+    handleResize(); // Llamar una vez al montar para establecer el valor inicial
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="sticky top-0 z-50">
       <div className="menu flex sm:flex-col md:flex-row lg:flex-row items-center bg-cyan-950 text-white p-4 shadow-lg">

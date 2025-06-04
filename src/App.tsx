@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { use, useContext, useEffect } from "react";
 import { GeolocationContext, type GeolocationContextType } from "./context/GeolocationContext";
 import Menu from "./components/Menu/Menu";
 import { LoginContext } from "./context/LoginContext";
@@ -14,6 +14,7 @@ import Footer from "./components/Footer/Footer";
 import AdminGarages from "./pages/Admin/AdminGarages/AdminGarages";
 import FormGarage from "./pages/Admin/AdminGarages/FormGarage/FormGarage";
 import { ToastContainer } from "react-toastify";
+import Garage from "./pages/Garage/Garage/Garage";
 
 function App() {
   const {latitude, longitude, getCurrentPosition} = useContext<GeolocationContextType>(GeolocationContext);
@@ -40,8 +41,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/inicio" element={<Home />}/>
+          <Route path="/talleres" element={<Garage />}/>
           <Route path="/talleres/:idGarage" element={<GarageDetail />}/>
-          <Route path="/talleres" element={<GarageDetail />}/>
           <Route path="/acerca-de" element={<AboutUs />} />
           <Route path="/contactanos" element={<ContactUs />} />
           <Route path="/administrar" element={<Admin />} />
