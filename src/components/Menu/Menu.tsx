@@ -31,7 +31,7 @@ const Menu = () => {
 
   return (
     <div className="sticky top-0 z-50">
-      <div className="menu flex sm:flex-col md:flex-row lg:flex-row items-center bg-cyan-950 text-white p-4 shadow-lg">
+      <div className="menu flex sm:flex-col md:flex-row lg:flex-row items-center bg-blue-600 text-white p-4 shadow-lg">
         <div onClick={() => navigate('/')} className="logo flex items-center cursor-pointer">
           <span className="text-xl font-bold">TallerGo</span>
         </div>
@@ -59,13 +59,13 @@ const Menu = () => {
         </nav>
       </div>
       {isMobile && showMenu && (
-        <ul className="flex flex-col space-x-4 bg-cyan-950 shadow-lg">
+        <ul className="flex flex-col space-x-4 bg-blue-700 shadow-lg">
             <>
-              <Link to="/" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Inicio</Link>
-              <Link to="/talleres" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Talleres</Link>
-              <Link to="/administrar" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Administrar</Link>
-              <Link to="/acerca-de" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Acerca de</Link>
-              <Link to="/contactanos" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-cyan-700 active:text-white active:bg-cyan-800 cursor-pointer">Contáctanos</Link>
+              <Link to="/" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-blue-600 active:text-white active:bg-blue-800 cursor-pointer">Inicio</Link>
+              <Link to="/talleres" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-blue-600 active:text-white active:bg-blue-800 cursor-pointer">Talleres</Link>
+              <Link to="/administrar" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-blue-600 active:text-white active:bg-blue-800 cursor-pointer">Administrar</Link>
+              <Link to="/acerca-de" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-blue-600 active:text-white active:bg-blue-800 cursor-pointer">Acerca de</Link>
+              <Link to="/contactanos" onClick={() => setShowMenu(!showMenu)} className="text-gray-100 p-4 hover:text-white hover:bg-blue-600 active:text-white active:bg-blue-800 cursor-pointer">Contáctanos</Link>
               <p onClick={() => {
                 logout();
                 navigate('/');

@@ -15,6 +15,8 @@ import AdminGarages from "./pages/Admin/AdminGarages/AdminGarages";
 import FormGarage from "./pages/Admin/AdminGarages/FormGarage/FormGarage";
 import { ToastContainer } from "react-toastify";
 import Garage from "./pages/Garage/Garage/Garage";
+import AdminGaragesTypes from "./pages/Admin/AdminGaragesTypes/AdminGaragesTypes";
+import FormGaragesTypes from "./pages/Admin/AdminGaragesTypes/FormGaragesTypes/FormGaragesTypes";
 
 function App() {
   const {latitude, longitude, getCurrentPosition} = useContext<GeolocationContextType>(GeolocationContext);
@@ -46,6 +48,9 @@ function App() {
           <Route path="/acerca-de" element={<AboutUs />} />
           <Route path="/contactanos" element={<ContactUs />} />
           <Route path="/administrar" element={<Admin />} />
+          <Route path="/administrar/tipos-talleres" element={<AdminGaragesTypes />} />
+          <Route path="/administrar/tipos-talleres/nuevo" element={<FormGaragesTypes />} />
+          <Route path="/administrar/tipos-talleres/:id" element={<FormGaragesTypes />} />
           <Route path="/administrar/talleres" element={<AdminGarages />} />
           <Route path="/administrar/talleres/nuevo" element={<FormGarage />} />
         </Routes>

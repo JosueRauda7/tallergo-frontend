@@ -15,7 +15,7 @@ const SearchItem = ({
     labels = [], onClick = () => {}
   }: Props) => {
   return (
-    <div onClick={onClick} className="search-item bg-white p-4 rounded shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-200">
+    <div onClick={onClick} className="search-item my-2 bg-white p-4 rounded shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-200">
       <h2 className="text-lg font-semibold">{title}</h2>
       <div className="flex items-center space-x-2 mb-2 flex-wrap">
         <span className="text-sm text-gray-500">{businessName}</span>

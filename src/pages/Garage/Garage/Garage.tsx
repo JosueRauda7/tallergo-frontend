@@ -3,8 +3,10 @@ import Button from "../../../components/Button/Button";
 import MainContainer from "../../../components/Layout/MainContainer/MainContainer";
 import { GeolocationContext } from "../../../context/GeolocationContext";
 import SearchItem from "../../../components/SearchItem/SearchItem";
+import { useNavigate } from "react-router-dom";
 
 const Garage = () => {
+  const navigate = useNavigate();
   const {latitude, longitude} = useContext(GeolocationContext);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -31,6 +33,15 @@ const Garage = () => {
           Aquí aparecerán los talleres cercanos a tu ubicación.
         </p>
         <div className="mt-4 px-4">
+          <SearchItem title="Taller Mecánico Juan Pérez"
+            description="Servicio de mecánica general y reparación de vehículos."
+            distance={0.5}
+            businessName="Juan Pérez Talleres"
+            labels={["Mecánica", "Reparación"]}
+            isSalingProducts
+            isService
+            onClick={() => navigate("/talleres/1")}
+          />
           <SearchItem title="Taller Jefferson Gutierritos"
             description="Taller especializado en mecánica general y electrónica automotriz."
             distance={1.2}
@@ -38,7 +49,7 @@ const Garage = () => {
             labels={["Mecánica", "Electrónica"]}
             isSalingProducts
             isService
-            onClick={() => console.log("Taller seleccionado")}
+            onClick={() => navigate("/talleres/1")}
           />
         </div>
       </div>
