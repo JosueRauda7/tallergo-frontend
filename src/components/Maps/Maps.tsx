@@ -35,9 +35,10 @@ const Maps = ({
 
   useEffect(() => {
     if (!map.current && mapContainer.current) {
+      const mapToken = import.meta.env.VITE_MAPBOX_TOKEN ?? '';
       map.current = new maplibregl.Map({
         container: mapContainer.current,
-        style: 'https://api.maptiler.com/maps/streets/style.json?key=b21za9jf7n3jogSzDnn3', // Estilo gratuito
+        style: `https://api.maptiler.com/maps/streets/style.json?key=${mapToken}`, // Estilo gratuito
         center: [longitude, latitude], // [lng, lat]
         zoom: zoom,
       });
