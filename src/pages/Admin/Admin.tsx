@@ -68,12 +68,12 @@ const Admin = () => {
                   Aquí puedes administrar las categorías de los talleres.
                 </p>
                 <div className="flex space-x-4 mt-4 w-full flex-wrap">
-                  <Link to="/administrar/tipo-usuarios">
+                  <Link to="/administrar/categorias">
                     <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                       Administrar Categorías
                     </button>
                   </Link>
-                  <Link to="/administrar/usuarios">
+                  <Link to="/administrar/sub-categorias">
                     <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                       Administrar Sub Categorías
                     </button>
@@ -93,17 +93,17 @@ const Admin = () => {
                 Aquí puedes administrar los servicios y productos ofrecidos.
               </p>
               <div className="flex space-x-4 mt-4 w-full flex-wrap">
-                <Link to="/administrar/1/servicios">
+                <Link to="/administrar/servicios">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Servicios
                   </button>
                 </Link>
-                <Link to="/administrar/1/productos">
+                <Link to="/administrar/productos">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Productos
                   </button>
                 </Link>
-                <Link to="/administrar/1/promociones">
+                <Link to="/administrar/promociones">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Promociones
                   </button>

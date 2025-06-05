@@ -1,9 +1,9 @@
-import { use, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { GeolocationContext, type GeolocationContextType } from "./context/GeolocationContext";
 import Menu from "./components/Menu/Menu";
 import { LoginContext } from "./context/LoginContext";
 import Login from "./pages/Login/Login";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import GarageDetail from "./pages/Garage/GarageDetail/GarageDetail";
 import Register from "./pages/Register/Register";
@@ -19,16 +19,31 @@ import AdminGaragesTypes from "./pages/Admin/AdminGaragesTypes/AdminGaragesTypes
 import FormGaragesTypes from "./pages/Admin/AdminGaragesTypes/FormGaragesTypes/FormGaragesTypes";
 import Bussiness from "./pages/Admin/Bussiness/Bussiness";
 import FormBussiness from "./pages/Admin/Bussiness/FormBussiness/FormBussiness";
+import UserTypes from "./pages/Admin/UserTypes/UserTypes";
+import FormUserTypes from "./pages/Admin/UserTypes/FormUserTypes/FormUserTypes";
+import Users from "./pages/Admin/Users/Users";
+import FormUsers from "./pages/Admin/Users/FormUsers/FormUsers";
+import Categories from "./pages/Admin/Categories/Categories";
+import FormCategorie from "./pages/Admin/Categories/FormCategorie/FormCategorie";
+import SubCategories from "./pages/Admin/SubCategories/SubCategories";
+import FormSubCategorie from "./pages/Admin/SubCategories/FormSubCategorie/FormSubCategorie";
+import Services from "./pages/Admin/Services/Services";
+import FormService from "./pages/Admin/Services/FormService/FormService";
 
 function App() {
   const {latitude, longitude, getCurrentPosition} = useContext<GeolocationContextType>(GeolocationContext);
   const {isLoggedIn} = useContext(LoginContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCurrentPosition();
   }, [latitude, longitude, getCurrentPosition]);
 
   if (!isLoggedIn) {
+    if (location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/registrarse') {
+      navigate('/');
+    }
     return (
       <Routes>
         <Route path="/" element={<Login />} />
@@ -59,6 +74,21 @@ function App() {
           <Route path="/administrar/talleres" element={<AdminGarages />} />
           <Route path="/administrar/talleres/nuevo" element={<FormGarage />} />
           <Route path="/administrar/talleres/:id" element={<FormGarage />} />
+          <Route path="/administrar/tipo-usuarios/" element={<UserTypes />} />
+          <Route path="/administrar/tipo-usuarios/nuevo" element={<FormUserTypes />} />
+          <Route path="/administrar/tipo-usuarios/:id" element={<FormUserTypes />} />
+          <Route path="/administrar/usuarios/" element={<Users />} />
+          <Route path="/administrar/usuarios/nuevo" element={<FormUsers />} />
+          <Route path="/administrar/usuarios/:id" element={<FormUsers />} />
+          <Route path="/administrar/categorias/" element={<Categories />} />
+          <Route path="/administrar/categorias/nuevo" element={<FormCategorie />} />
+          <Route path="/administrar/categorias/:id" element={<FormCategorie />} />
+          <Route path="/administrar/sub-categorias/" element={<SubCategories />} />
+          <Route path="/administrar/sub-categorias/nuevo" element={<FormSubCategorie />} />
+          <Route path="/administrar/sub-categorias/:id" element={<FormSubCategorie />} />
+          <Route path="/administrar/servicios/" element={<Services />} />
+          <Route path="/administrar/servicios/nuevo" element={<FormService />} />
+          <Route path="/administrar/servicios/:id" element={<FormService />} />
         </Routes>
       </div>
       <ToastContainer />

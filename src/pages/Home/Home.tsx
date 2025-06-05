@@ -13,8 +13,6 @@ const Home = () => {
   const [longitudeToGo, setLongitudeToGo] = useState<null | number>(null);
   const [markerSelected, setMarkerSelected] = useState<null | string>(null);
 
-  console.log(latitude, longitude);
-
   return (
     <MainContainer>
       <div className="flex flex-col items-center justify-center">
