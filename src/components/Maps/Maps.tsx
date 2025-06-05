@@ -93,7 +93,30 @@ const Maps = ({
 
       }
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (!map.current) return;
+
+    // Limpiar marcadores anteriores
+    othersMarkersRef.current.forEach(marker => marker.remove());
+    othersMarkersRef.current = [];
+
+    // Agregar nuevos marcadores
+    if (marker && mapMarkers?.length) {
+      mapMarkers.forEach((mapMarker: MapMarker, index) => {
+        const newMarker = new maplibregl.Marker({ color: 'red' })
+          .setLngLat([mapMarker.longitude + (index * 0.001), mapMarker.latitude + (index * 0.001)])
+          .setPopup(new maplibregl.Popup().setHTML(mapMarker.title))
+          .addTo(map.current!);
+
+        othersMarkersRef.current.push(newMarker);
+        newMarker.getElement().addEventListener('click', (e) => {
+          mapMarker.action(e);
+        });
+      });
+    }
+  }, [mapMarkers, marker]);
 
   return (
     <div

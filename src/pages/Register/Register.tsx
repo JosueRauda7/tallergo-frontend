@@ -1,8 +1,11 @@
 import { Formik } from "formik";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginContext } from "../../context/LoginContext";
 
 const Register = () => {
+  const {login} = useContext(LoginContext);
+  const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState({
     username: "",
     names: "",
@@ -18,6 +21,8 @@ const Register = () => {
         onSubmit={(values) => {
           console.log("Form submitted with values:", values);
           // Aquí puedes manejar la lógica de inicio de sesión
+          login();
+          navigate('/');
         }}
         validateOnBlur={false}
         validateOnChange={false}

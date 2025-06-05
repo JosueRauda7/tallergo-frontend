@@ -28,8 +28,8 @@ export const LoginContextProvider = ({ children }: Props) => {
 
   const login = () => {
     setIsLoggedIn(true);
-    setUser({ id: "123", name: "John Doe" }); // Example user data
-    setUserType("admin"); // Example user type
+    setUser({ id: "1", name: "Administrador" }); // Example user data
+    setUserType("ADMIN"); // Example user type
   };
 
   const logout = () => {

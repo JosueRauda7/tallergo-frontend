@@ -1,28 +1,24 @@
-import { Formik } from "formik";
-import MainContainer from "../../../../components/Layout/MainContainer/MainContainer"
 import { useContext, useEffect, useState } from "react";
-import { GeolocationContext } from "../../../../context/GeolocationContext";
 import { useNavigate, useParams } from "react-router-dom";
-import Maps, { type MapMarker } from "../../../../components/Maps/Maps";
-import type { MapMouseEvent } from "maplibre-gl";
+import { GeolocationContext } from "../../../../context/GeolocationContext";
+import MainContainer from "../../../../components/Layout/MainContainer/MainContainer";
+import { Formik } from "formik";
 import { toast } from "react-toastify";
+import type { MapMouseEvent } from "maplibre-gl";
+import Maps from "../../../../components/Maps/Maps";
 import axios from "axios";
 
-const FormGarage = () => {
+const FormBussiness = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [bussinessData, setBussinessData] = useState<any>([]);
-  const [garagesTypesData, setGaragesTypeData] = useState<any>([]);
+
   const { latitude, longitude } = useContext(GeolocationContext);
 
   const [initialValues, setInitialValues] = useState({
-    bussinessId: "",
-    garageTypeId: "",
     name: "",
     address: "",
     phone: "",
     email: "",
-    description: "",
   });
 
   const [geolocation, setGeolocation] = useState<{latitude: null | number, longitude: null | number}>({
@@ -31,35 +27,16 @@ const FormGarage = () => {
   });
 
   useEffect(() => {
-    const fetchBussiness = async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/empresas`);
-      const data = await res.json();
-      setBussinessData(data);
-    };
-
-    const fetchGaragesTypes = async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/tipo-talleres`);
-      const data = await res.json();
-      setGaragesTypeData(data);
-    };
-
-    fetchBussiness();
-    fetchGaragesTypes();
-  }, []);
-
-  useEffect(() => {
-    const fetchGarage = async () => {
-      if (id) {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/talleres/${id}`);
+    const fetchEmpresa = async () => {
+      if(id) {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/empresas/${id}`);
+        console.log(res);
         if (res.status === 200) {
           setInitialValues({
-            bussinessId: res.data.empresa.id,
-            garageTypeId: res.data.tipoTaller.id,
             name: res.data.nombre,
-            address: res.data.direccion,
-            phone: res.data.telefono,
-            email: res.data.email,
-            description: res.data.descripcion,
+            address: res.data.direccionPrincipal,
+            phone: res.data.telefonoPrincipal,
+            email: res.data.correoPrincipal,
           });
           setGeolocation({
             latitude: res.data.latitud,
@@ -69,79 +46,63 @@ const FormGarage = () => {
       }
     };
 
-    fetchGarage();
+    fetchEmpresa();
   }, [id]);
 
   return (
     <MainContainer>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
         <div className="">
-          <h1 className="text-4xl font-bold px-4 mb-4">{id ? 'Editar' : 'Nuevo'} Taller</h1>
+          <h1 className="text-4xl font-bold px-4 mb-4">{id ? 'Editar' : 'Agregar'} Empresa</h1>
           <Formik
             initialValues={initialValues}
             enableReinitialize
-            onSubmit={(values) => {
-              if (!geolocation.latitude || !geolocation.longitude) {
-                toast.error("Por favor, selecciona una ubicación en el mapa.", {
-                  position: "bottom-right",
-                });
-              }
-              if (!id) {
-                axios.post(`${import.meta.env.VITE_API_URL}/talleres`, {
-                  empresa: {id: values.bussinessId},
-                  tipotaller: {id: values.garageTypeId},
+            onSubmit={async (values) => {
+              if (!id){
+                if (!geolocation.latitude || !geolocation.longitude) {
+                  toast.error("Por favor, selecciona una ubicación en el mapa.", {
+                    position: "bottom-right",
+                  });
+                }
+                const res = await axios.post(`${import.meta.env.VITE_API_URL}/empresas`, {
                   nombre: values.name,
-                  direccion: values.address,
-                  telefono: values.phone,
-                  email: values.email,
-                  descripcion: values.description,
+                  direccionPrincipal: values.address,
+                  telefonoPrincipal: values.phone,
+                  correoPrincipal: values.email,
                   latitud: geolocation.latitude,
                   longitud: geolocation.longitude,
-                })
-                .then(res => {
-                  if (res.status === 201) {
-                    toast.success("Taller creado exitosamente", {
-                      position: "bottom-right",
-                    });
-                    navigate('/administrar/talleres');
-                  }
-                })
-                .catch(err => {
-                  console.error("Error al crear el taller:", err);
                 });
-              } else {
-                axios.put(`${import.meta.env.VITE_API_URL}/talleres/${id}`, {
-                  empresa: {id: values.bussinessId},
-                  tipoTaller: {id: values.garageTypeId},
+
+                if (res.status === 201) {
+                  toast.success("Empresa creada exitosamente", {
+                    position: "bottom-right",
+                  });
+                  navigate('/administrar/empresas');
+                } else {
+                  console.error("Error al crear la empresa:", res.data);
+                }
+              }else{
+                const res = await axios.put(`${import.meta.env.VITE_API_URL}/empresas/${id}`, {
                   nombre: values.name,
-                  direccion: values.address,
-                  telefono: values.phone,
-                  email: values.email,
-                  descripcion: values.description,
+                  direccionPrincipal: values.address,
+                  telefonoPrincipal: values.phone,
+                  correoPrincipal: values.email,
                   latitud: geolocation.latitude,
                   longitud: geolocation.longitude,
-                })
-                .then(res => {
-                  if (res.status === 200) {
-                    toast.success("Taller actualizado exitosamente", {
-                      position: "bottom-right",
-                    });
-                    navigate('/administrar/talleres');
-                  }
-                })
-                .catch(err => {
-                  console.error("Error al actualizar el taller:", err);
                 });
+
+                if (res.status === 200) {
+                  toast.success("Empresa actualizada exitosamente", {
+                    position: "bottom-right",
+                  });
+                  navigate('/administrar/empresas');
+                } else {
+                  console.error("Error al actualizar la empresa:", res.data);
+                }
               }
             }}
             validate={(values) => {
               const errors: any = {};
-              if (!values.bussinessId) {
-                errors.bussinessId = "La empresa es requerida";
-              }
-              if (!values.garageTypeId) {
-                errors.garageTypeId = "El tipo de taller es requerido";
-              }
               if (!values.name) {
                 errors.name = "El nombre es requerido";
               }
@@ -169,42 +130,6 @@ const FormGarage = () => {
             }) => (
               <>
                 <form onSubmit={handleSubmit} className="space-y-4 px-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Empresa</label>
-                    <select
-                      name="bussinessId"
-                      value={values.bussinessId}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={`py-2 px-2 mt-1 block w-full border ${errors.bussinessId && touched.bussinessId ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
-                    >
-                      <option value="">Seleccione una empresa</option>
-                      {bussinessData.map((bussiness: any) => (
-                        <option key={bussiness.id} value={bussiness.id}>
-                          {bussiness.nombre}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.bussinessId && touched.bussinessId && <p className="text-red-500 text-sm">{errors.bussinessId}</p>}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mt-2">Tipo de Taller</label>
-                    <select
-                      name="garageTypeId"
-                      value={values.garageTypeId}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={`py-2 px-2 mt-1 block w-full border ${errors.garageTypeId && touched.garageTypeId ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
-                    >
-                      <option value="">Seleccione un tipo de taller</option>
-                      {garagesTypesData.map((garageType: any) => (
-                        <option key={garageType.id} value={garageType.id}>
-                          {garageType.nombre}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.garageTypeId && touched.garageTypeId && <p className="text-red-500 text-sm">{errors.garageTypeId}</p>}
-                  </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Nombre</label>
                     <input
@@ -266,7 +191,7 @@ const FormGarage = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        navigate('/administrar/talleres');
+                        navigate('/administrar/empresas');
                       }}
                       className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-400 cursor-pointer"
                     >Cancelar</button>
@@ -292,7 +217,7 @@ const FormGarage = () => {
           />
           <div className="flex mt-4">
             <div className="flex flex-3/4 flex-col items-start">
-                <h3 className="text-lg font-semibold">Ubicación de taller seleccionada:</h3>
+                <h3 className="text-lg font-semibold">Ubicación de empresa seleccionada:</h3>
                 <p className="flex-1/4 text-sm">
                   <b>Latitud:</b> {geolocation.latitude ? geolocation.latitude : "Ubicar en el mapa."}
                 </p>
@@ -307,4 +232,4 @@ const FormGarage = () => {
   );
 };
 
-export default FormGarage;
+export default FormBussiness;

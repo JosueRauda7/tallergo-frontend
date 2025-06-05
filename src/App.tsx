@@ -17,6 +17,8 @@ import { ToastContainer } from "react-toastify";
 import Garage from "./pages/Garage/Garage/Garage";
 import AdminGaragesTypes from "./pages/Admin/AdminGaragesTypes/AdminGaragesTypes";
 import FormGaragesTypes from "./pages/Admin/AdminGaragesTypes/FormGaragesTypes/FormGaragesTypes";
+import Bussiness from "./pages/Admin/Bussiness/Bussiness";
+import FormBussiness from "./pages/Admin/Bussiness/FormBussiness/FormBussiness";
 
 function App() {
   const {latitude, longitude, getCurrentPosition} = useContext<GeolocationContextType>(GeolocationContext);
@@ -26,15 +28,15 @@ function App() {
     getCurrentPosition();
   }, [latitude, longitude, getCurrentPosition]);
 
-  // if (!isLoggedIn) {
-  //   return (
-  //     <Routes>
-  //       <Route path="/" element={<Login />} />
-  //       <Route path="/login" element={<Login />} />
-  //       <Route path="/registrarse" element={<Register />} />
-  //     </Routes>
-  //   );
-  // }
+  if (!isLoggedIn) {
+    return (
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registrarse" element={<Register />} />
+      </Routes>
+    );
+  }
 
   return (
     <>
@@ -48,11 +50,15 @@ function App() {
           <Route path="/acerca-de" element={<AboutUs />} />
           <Route path="/contactanos" element={<ContactUs />} />
           <Route path="/administrar" element={<Admin />} />
+          <Route path="/administrar/empresas" element={<Bussiness />} />
+          <Route path="/administrar/empresas/nuevo" element={<FormBussiness />} />
+          <Route path="/administrar/empresas/:id" element={<FormBussiness />} />
           <Route path="/administrar/tipos-talleres" element={<AdminGaragesTypes />} />
           <Route path="/administrar/tipos-talleres/nuevo" element={<FormGaragesTypes />} />
           <Route path="/administrar/tipos-talleres/:id" element={<FormGaragesTypes />} />
           <Route path="/administrar/talleres" element={<AdminGarages />} />
           <Route path="/administrar/talleres/nuevo" element={<FormGarage />} />
+          <Route path="/administrar/talleres/:id" element={<FormGarage />} />
         </Routes>
       </div>
       <ToastContainer />
