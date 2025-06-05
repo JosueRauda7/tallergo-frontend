@@ -113,19 +113,14 @@ const Admin = () => {
           </div>
           <div className="p-6 bg-gray-300">
             <div className="">
-              <h2 className="text-2xl font-semibold">Gestión de Etiquetas y Marcas 📱</h2>
+              <h2 className="text-2xl font-semibold">Gestión de Etiquetas 📱</h2>
               <p className="t-2">
-                Aquí puedes administrar las etiquetas y marcas de los talleres.
+                Aquí puedes administrar las etiquetas de los talleres.
               </p>
               <div className="flex space-x-4 mt-4 w-full flex-wrap">
-                <Link to="/administrar/tipo-usuarios">
+                <Link to="/administrar/etiquetas">
                   <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
                     Administrar Etiquetas
-                  </button>
-                </Link>
-                <Link to="/administrar/usuarios">
-                  <button className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
-                    Administrar Marcas
                   </button>
                 </Link>
               </div>

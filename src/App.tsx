@@ -29,6 +29,12 @@ import SubCategories from "./pages/Admin/SubCategories/SubCategories";
 import FormSubCategorie from "./pages/Admin/SubCategories/FormSubCategorie/FormSubCategorie";
 import Services from "./pages/Admin/Services/Services";
 import FormService from "./pages/Admin/Services/FormService/FormService";
+import Products from "./pages/Admin/Products/Products";
+import FormProduct from "./pages/Admin/Products/FormProduct/FormProduct";
+import Promociones from "./pages/Admin/Promociones/Promociones";
+import FormPromocion from "./pages/Admin/Promociones/FormPromocion/FormPromocion";
+import Etiquetas from "./pages/Admin/Etiquetas/Etiquetas";
+import FormEtiqueta from "./pages/Admin/Etiquetas/FormEtiqueta/FormEtiqueta";
 
 function App() {
   const {latitude, longitude, getCurrentPosition} = useContext<GeolocationContextType>(GeolocationContext);
@@ -89,6 +95,15 @@ function App() {
           <Route path="/administrar/servicios/" element={<Services />} />
           <Route path="/administrar/servicios/nuevo" element={<FormService />} />
           <Route path="/administrar/servicios/:id" element={<FormService />} />
+          <Route path="/administrar/productos/" element={<Products />} />
+          <Route path="/administrar/productos/nuevo" element={<FormProduct />} />
+          <Route path="/administrar/productos/:id" element={<FormProduct />} />
+          <Route path="/administrar/promociones/" element={<Promociones />} />
+          <Route path="/administrar/promociones/nuevo" element={<FormPromocion />} />
+          <Route path="/administrar/promociones/:id" element={<FormPromocion />} />
+          <Route path="/administrar/etiquetas/" element={<Etiquetas />} />
+          <Route path="/administrar/etiquetas/nuevo" element={<FormEtiqueta />} />
+          <Route path="/administrar/etiquetas/:id" element={<FormEtiqueta />} />
         </Routes>
       </div>
       <ToastContainer />

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import MainContainer from "../../../../components/Layout/MainContainer/MainContainer";
 import { Formik } from "formik";
 
-const FormService = () => {
+const FormProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -18,13 +18,14 @@ const FormService = () => {
     nombre: '',
     descripcion: '',
     precio: 0,
+    stock: 0,
   });
 
   return (
     <MainContainer>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
         <div className="">
-          <h1 className="text-4xl font-bold px-4 mb-4">{id ? 'Editar' : 'Nuevo'} Servicio</h1>
+          <h1 className="text-4xl font-bold px-4 mb-4">{id ? 'Editar' : 'Nuevo'} Producto</h1>
           <Formik
             initialValues={initialValues}
             enableReinitialize
@@ -46,6 +47,11 @@ const FormService = () => {
                 errors.precio = "El precio es requerido";
               } else if (isNaN(values.precio)) {
                 errors.precio = "El precio debe ser un número";
+              }
+              if (!values.stock) {
+                errors.stock = "El stock es requerido";
+              } else if (isNaN(values.stock)) {
+                errors.stock = "El stock debe ser un número";
               }
               return errors;
             }}
@@ -112,6 +118,18 @@ const FormService = () => {
                     />
                     {errors.precio && touched.precio && <p className="text-red-500 text-sm">{errors.precio}</p>}
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Stock</label>
+                    <input
+                      type="number"
+                      name="stock"
+                      value={values.stock}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={`py-2 px-2 mt-1 block w-full border ${errors.stock && touched.stock ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+                    />
+                    {errors.stock && touched.stock && <p className="text-red-500 text-sm">{errors.stock}</p>}
+                  </div>
                   <div className="flex items-center justify-end">
                     <button
                       type="submit"
@@ -122,7 +140,7 @@ const FormService = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        navigate('/administrar/servicios');
+                        navigate('/administrar/productos');
                       }}
                       className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-400  cursor-pointer"
                     >Cancelar</button>
@@ -137,4 +155,4 @@ const FormService = () => {
   );
 };
 
-export default FormService;
+export default FormProduct;
