@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import MainContainer from "../../../components/Layout/MainContainer/MainContainer";
 import Table from "../../../components/Table/Table";
 import Swal from "sweetalert2";
@@ -7,60 +7,74 @@ import axios from "axios";
 
 const Users = () => {
   const navigate = useNavigate();
-  const [rows, setRows] = useState<any>([{
-    id: 1,
-    usuario: 'admin',
-    tipoUsuario: 'ADMIN',
-    nombres: 'Administrador',
-    apellidos: 'Administrador',
-    estaEliminado: 'NO',
-    estaActivo: 'SI'
-  }, {
-    id: 2,
-    usuario: 'jrauda',
-    tipoUsuario: 'USER',
-    nombres: 'Josué',
-    apellidos: 'Rauda',
-    estaEliminado: 'NO',
-    estaActivo: 'SI'
-  }]);
+  const [rows, setRows] = useState<any>([
+    {
+      id: 1,
+      usuario: "admin",
+      tipoUsuario: "ADMIN",
+      nombres: "Administrador",
+      apellidos: "Administrador",
+      estaEliminado: "NO",
+      estaActivo: "SI",
+    },
+    {
+      id: 2,
+      usuario: "jrauda",
+      tipoUsuario: "USER",
+      nombres: "Josué",
+      apellidos: "Rauda",
+      estaEliminado: "NO",
+      estaActivo: "SI",
+    },
+  ]);
   const [loading, setLoading] = useState(true);
 
   return (
     <MainContainer>
-      <div className="">
-        <h1 className="text-4xl font-bold">Administración de Usuarios</h1>
+      <div className=''>
+        <h1 className='text-4xl font-bold'>Administración de Usuarios</h1>
       </div>
-      <div className="mt-6 w-12xl">
-        <button onClick={() => navigate('/administrar/usuarios/nuevo')} className="bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800">
+      <div className='mt-6 w-12xl'>
+        <button
+          onClick={() => navigate("/administrar/usuarios/nuevo")}
+          className='bg-blue-700 text-white px-4 py-2 rounded mt-2 cursor-pointer hover:bg-blue-800'>
           Agregar Usuario
         </button>
-        <div className="mt-4">
+        <div className='mt-4'>
           <Table
-            data={rows.filter(row => row.estaEliminado === 'NO' && row.estaActivo==='SI')}
-            headers={['ID', 'Usuario', 'Tipo de Usuario', 'Nombres', 'Apellidos', 'Acciones']} itemsPerPage={5}
+            data={rows.filter(
+              (row) => row.estaEliminado === "NO" && row.estaActivo === "SI",
+            )}
+            headers={[
+              "ID",
+              "Usuario",
+              "Tipo de Usuario",
+              "Nombres",
+              "Apellidos",
+              "Acciones",
+            ]}
+            itemsPerPage={5}
             renderRow={(row: any) => (
               <>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                   {row.id}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                   {row.usuario}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                   {row.tipoUsuario}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                   {row.nombres}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                   {row.apellidos}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
                   <button
                     onClick={() => navigate(`/administrar/usuarios/${row.id}`)}
-                    className="cursor-pointer bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                  >
+                    className='cursor-pointer bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded'>
                     Editar
                   </button>
                   <button
@@ -70,19 +84,22 @@ const Users = () => {
                         confirmButtonText: "SI",
                         showCancelButton: true,
                         cancelButtonText: "NO",
-                      })
-                        .then(res => {
-                          if(res.isConfirmed){
-                            axios.delete(`${import.meta.env.VITE_API_URL}/usuarios/${row.id}`)
-                              .then(() => {
-                                setRows(rows.filter((r: any) => r.id !== row.id));
-                              })
-                              .catch(err => console.error("Error deleting user:", err));
-                          }
+                      }).then((res) => {
+                        if (res.isConfirmed) {
+                          axios
+                            .delete(
+                              `${import.meta.env.VITE_API_URL}/usuarios/${row.id}`,
+                            )
+                            .then(() => {
+                              setRows(rows.filter((r: any) => r.id !== row.id));
+                            })
+                            .catch((err) =>
+                              console.error("Error deleting user:", err),
+                            );
+                        }
                       });
                     }}
-                    className="ml-2 cursor-pointer bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-                  >
+                    className='ml-2 cursor-pointer bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded'>
                     Eliminar
                   </button>
                 </td>
