@@ -1,33 +1,57 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import MainContainer from "../../../components/Layout/MainContainer/MainContainer";
 import Table from "../../../components/Table/Table";
 import Swal from "sweetalert2";
 import axios from "axios";
+import type {UsuarioResponse} from "../../../interfaces/http/usuarios.interface";
 
 const Users = () => {
   const navigate = useNavigate();
-  const [rows, setRows] = useState<any>([
-    {
-      id: 1,
-      usuario: "admin",
-      tipoUsuario: "ADMIN",
-      nombres: "Administrador",
-      apellidos: "Administrador",
-      estaEliminado: "NO",
-      estaActivo: "SI",
-    },
-    {
-      id: 2,
-      usuario: "jrauda",
-      tipoUsuario: "USER",
-      nombres: "Josué",
-      apellidos: "Rauda",
-      estaEliminado: "NO",
-      estaActivo: "SI",
-    },
-  ]);
+  const [rows, setRows] = useState<any>(
+    [],
+    // [{
+    //   id: 1,
+    //   usuario: "admin",
+    //   tipoUsuario: "ADMIN",
+    //   nombres: "Administrador",
+    //   apellidos: "Administrador",
+    //   estaEliminado: "NO",
+    //   estaActivo: "SI",
+    // },
+    // {
+    //   id: 2,
+    //   usuario: "jrauda",
+    //   tipoUsuario: "USER",
+    //   nombres: "Josué",
+    //   apellidos: "Rauda",
+    //   estaEliminado: "NO",
+    //   estaActivo: "SI",
+    // }]
+  );
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/usuarios`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setRows(
+        res.data.map((user: UsuarioResponse) => ({
+          id: user.id,
+          usuario: user.usuario,
+          tipoUsuario: user.tipoUsuario.nombre,
+          nombres: user.nombres,
+          apellidos: user.apellidos,
+          estaEliminado: "NO",
+          estaActivo: user.estaActivo,
+        })),
+      );
+    };
+    fetchUsers();
+  }, []);
 
   return (
     <MainContainer>
