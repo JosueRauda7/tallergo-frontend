@@ -1,7 +1,8 @@
-import { Formik } from "formik";
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { LoginContext } from "../../context/LoginContext";
+import {Formik} from "formik";
+import {useContext, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {LoginContext} from "../../context/LoginContext";
+import axios from "axios";
 
 const Register = () => {
   const {login} = useContext(LoginContext);
@@ -15,21 +16,39 @@ const Register = () => {
   });
 
   return (
-    <div className="flex items-center min-h-full justify-center overflow-y-scroll md:py-4 sm:bg-white md:bg-gray-200 lg:bg-gray-200">
+    <div className='flex items-center min-h-full justify-center overflow-y-scroll md:py-4 sm:bg-white md:bg-gray-200 lg:bg-gray-200'>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => {
-          console.log("Form submitted with values:", values);
-          // Aquí puedes manejar la lógica de inicio de sesión
-          login();
-          navigate('/');
+        onSubmit={async (values) => {
+          const registerRes = await axios.post(
+            `${import.meta.env.VITE_API_URL}/usuarios`,
+            {
+              tipoUsuario: {
+                id: 3,
+                nombre: "Usuario",
+                estaActivo: "SI",
+                estaEliminado: "NO",
+              },
+              nombres: values.names,
+              apellidos: values.lastNames,
+              usuario: values.username,
+              pwd: values.password,
+              estaActivo: "SI",
+              estaEliminado: "NO",
+            },
+          );
+          // login();
+          navigate("/login");
         }}
         validateOnBlur={false}
         validateOnChange={false}
         validate={(values) => {
           const errors: {
-            username?: string; password?: string; repeatPassword?: string;
-            names?: string; lastNames?: string;
+            username?: string;
+            password?: string;
+            repeatPassword?: string;
+            names?: string;
+            lastNames?: string;
           } = {};
           if (!values.username) {
             errors.username = "El nombre de usuario es requerido";
@@ -47,74 +66,103 @@ const Register = () => {
             errors.repeatPassword = "Las contraseñas no coinciden";
           }
           return errors;
-        }}
-      >
-        {({ values, handleChange, handleSubmit, errors }) => (
-          <form className="bg-white flex flex-col items-center justify-center sm:w-full md:w-2xl lg:w-2xl md:shadow-md lg:shadow-lg rounded-2xl md:p-4 pt-9 pb-9" onSubmit={handleSubmit}>
-            <h1 className="text-5xl font-bold mb-5 text-center">Registrarse</h1>
-            <div className="flex flex-col items-center mb-2">
-              <label className="text-xl font-semibold mb-2" htmlFor="username">Usuario:</label>
+        }}>
+        {({values, handleChange, handleSubmit, errors}) => (
+          <form
+            className='bg-white flex flex-col items-center justify-center sm:w-full md:w-2xl lg:w-2xl md:shadow-md lg:shadow-lg rounded-2xl md:p-4 pt-9 pb-9'
+            onSubmit={handleSubmit}>
+            <h1 className='text-5xl font-bold mb-5 text-center'>Registrarse</h1>
+            <div className='flex flex-col items-center mb-2'>
+              <label className='text-xl font-semibold mb-2' htmlFor='username'>
+                Usuario:
+              </label>
               <input
-                type="text"
-                id="username"
-                name="username"
-                className="border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96"
+                type='text'
+                id='username'
+                name='username'
+                className='border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96'
                 value={values.username}
                 onChange={handleChange}
               />
-              {errors.username && <div className="text-red-700 mb-2">{errors.username}</div>}
+              {errors.username && (
+                <div className='text-red-700 mb-2'>{errors.username}</div>
+              )}
             </div>
-            <div className="flex flex-col items-center mb-2">
-              <label className="text-xl font-semibold mb-2" htmlFor="names">Nombre:</label>
+            <div className='flex flex-col items-center mb-2'>
+              <label className='text-xl font-semibold mb-2' htmlFor='names'>
+                Nombre:
+              </label>
               <input
-                type="text"
-                id="names"
-                name="names"
-                className="border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96"
+                type='text'
+                id='names'
+                name='names'
+                className='border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96'
                 value={values.names}
                 onChange={handleChange}
               />
-              {errors.names && <div className="text-red-700 mb-2">{errors.names}</div>}
+              {errors.names && (
+                <div className='text-red-700 mb-2'>{errors.names}</div>
+              )}
             </div>
-            <div className="flex flex-col items-center mb-2">
-              <label className="text-xl font-semibold mb-2" htmlFor="lastNames">Apellidos:</label>
+            <div className='flex flex-col items-center mb-2'>
+              <label className='text-xl font-semibold mb-2' htmlFor='lastNames'>
+                Apellidos:
+              </label>
               <input
-                type="text"
-                id="lastNames"
-                name="lastNames"
-                className="border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96"
+                type='text'
+                id='lastNames'
+                name='lastNames'
+                className='border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96'
                 value={values.lastNames}
                 onChange={handleChange}
               />
-              {errors.lastNames && <div className="text-red-700 mb-2">{errors.lastNames}</div>}
+              {errors.lastNames && (
+                <div className='text-red-700 mb-2'>{errors.lastNames}</div>
+              )}
             </div>
-            <div className="flex flex-col items-center mb-5">
-              <label className="text-xl font-semibold mb-2" htmlFor="password">Contraseña:</label>
+            <div className='flex flex-col items-center mb-5'>
+              <label className='text-xl font-semibold mb-2' htmlFor='password'>
+                Contraseña:
+              </label>
               <input
-                type="password"
-                id="password"
-                name="password"
-                className="border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96"
+                type='password'
+                id='password'
+                name='password'
+                className='border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96'
                 value={values.password}
                 onChange={handleChange}
               />
-              {errors.password && <div className="text-red-700 mb-2">{errors.password}</div>}
+              {errors.password && (
+                <div className='text-red-700 mb-2'>{errors.password}</div>
+              )}
             </div>
-            <div className="flex flex-col items-center mb-5">
-              <label className="text-xl font-semibold mb-2" htmlFor="repeatPassword">Repetir Contraseña:</label>
+            <div className='flex flex-col items-center mb-5'>
+              <label
+                className='text-xl font-semibold mb-2'
+                htmlFor='repeatPassword'>
+                Repetir Contraseña:
+              </label>
               <input
-                type="password"
-                id="repeatPassword"
-                name="repeatPassword"
-                className="border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96"
+                type='password'
+                id='repeatPassword'
+                name='repeatPassword'
+                className='border-2 border-gray-300 p-2 rounded-lg w-full sm:w-80 md:w-96 lg:w-96'
                 value={values.repeatPassword}
                 onChange={handleChange}
               />
-              {errors.repeatPassword && <div className="text-red-700 mb-2">{errors.repeatPassword}</div>}
+              {errors.repeatPassword && (
+                <div className='text-red-700 mb-2'>{errors.repeatPassword}</div>
+              )}
             </div>
-            <button className="bg-blue-600 font-bold w-xs text-white p-3 rounded-xl shadow-xs cursor-pointer" type="submit">Registrarse</button>
-            <Link to={'/'} className="mt-2">
-              <button className="bg-green-600 font-bold w-xs text-white p-3 rounded-xl shadow-xs cursor-pointer">Ya tengo cuenta. Iniciar Sesión.</button>
+            <button
+              className='bg-blue-600 font-bold w-xs text-white p-3 rounded-xl shadow-xs cursor-pointer'
+              type='submit'>
+              Registrarse
+            </button>
+            <Link to={"/"} className='mt-2'>
+              <button className='bg-green-600 font-bold w-xs text-white p-3 rounded-xl shadow-xs cursor-pointer'>
+                Ya tengo cuenta. Iniciar Sesión.
+              </button>
             </Link>
           </form>
         )}

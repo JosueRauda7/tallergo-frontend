@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
-import { useNavigation } from "react-router-dom";
+import {createContext, useState} from "react";
+import {useNavigation} from "react-router-dom";
+import type {LoginResponse} from "../interfaces/http/login.interface";
 
 interface Props {
   children: React.ReactNode;
@@ -7,40 +8,47 @@ interface Props {
 
 export interface LoginContextType {
   isLoggedIn: boolean;
-  user: null | { id: string; name: string };
+  user: null | {id: string; name: string};
   userType: null | string;
-  login: () => void;
+  login: (loginResponse: LoginResponse) => void;
   logout: () => void;
-};
+}
 
 export const LoginContext = createContext<LoginContextType>({
   isLoggedIn: false,
   user: null,
   userType: null,
-  login: () => {},
+  login: (loginResponse: LoginResponse) => {},
   logout: () => {},
 });
 
-export const LoginContextProvider = ({ children }: Props) => {
+export const LoginContextProvider = ({children}: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<null | { id: string; name: string }>(null);
+  const [user, setUser] = useState<null | {id: string; name: string}>(null);
   const [userType, setUserType] = useState<null | string>(null);
 
-  const login = () => {
+  const login = (loginResponse: LoginResponse) => {
     setIsLoggedIn(true);
-    setUser({ id: "1", name: "Administrador" }); // Example user data
-    setUserType("ADMIN"); // Example user type
+    setUser({
+      id: loginResponse.id.toString(),
+      name: `${loginResponse.nombres} ${loginResponse.apellidos}`,
+    });
+    setUserType(loginResponse.tipoUsuario.nombre);
+    localStorage.setItem("token", loginResponse.token);
+    localStorage.setItem("userInfo", JSON.stringify(loginResponse));
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
     setUserType(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
   };
 
   return (
-    <LoginContext.Provider value={{ isLoggedIn, user, userType, login, logout }}>
+    <LoginContext.Provider value={{isLoggedIn, user, userType, login, logout}}>
       {children}
     </LoginContext.Provider>
   );
-}
+};
