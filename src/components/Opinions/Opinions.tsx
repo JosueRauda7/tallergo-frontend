@@ -54,7 +54,9 @@ const Opinions = ({idGarage, reviews}: Props) => {
           {"★".repeat(Math.round(averageRating)) +
             "☆".repeat(5 - Math.round(averageRating))}
         </span>
-        <span className='text-gray-500'>4.8 ({reviews?.length} reseñas)</span>
+        <span className='text-gray-500'>
+          {averageRating.toFixed(1)} ({reviews?.length} reseñas)
+        </span>
       </div>
       <div className='h-60 overflow-y-auto'>
         {reviews && reviews.length > 0
