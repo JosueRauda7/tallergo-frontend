@@ -88,12 +88,17 @@ const Maps = ({
       // Otras ubicaciones a mostrar en el mapa
       if (marker) {
         mapMarkers.forEach((mapMarker: MapMarker, index) => {
+          // console.log(mapMarker);
           const newMarker = new maplibregl.Marker({
             color: "red",
           })
             .setLngLat([
-              mapMarker.longitude + index * 0.001,
-              mapMarker.latitude + index * 0.001,
+              !isNaN(mapMarker.longitude) && !isNaN(index)
+                ? mapMarker.longitude + index * 0.001
+                : 0,
+              !isNaN(mapMarker.latitude) && !isNaN(index)
+                ? mapMarker.latitude + index * 0.001
+                : 0,
             ]) // Slightly offset markers
             .setPopup(new maplibregl.Popup().setHTML(mapMarker.title))
             .addTo(map.current!);
@@ -119,8 +124,12 @@ const Maps = ({
       mapMarkers.forEach((mapMarker: MapMarker, index) => {
         const newMarker = new maplibregl.Marker({color: "red"})
           .setLngLat([
-            mapMarker.longitude + index * 0.001,
-            mapMarker.latitude + index * 0.001,
+            !isNaN(mapMarker.longitude) && !isNaN(index)
+              ? Number(mapMarker.longitude) + Number(index) * 0.001
+              : 0,
+            !isNaN(mapMarker.latitude) && !isNaN(index)
+              ? Number(mapMarker.latitude) + Number(index) * 0.001
+              : 0,
           ])
           .setPopup(new maplibregl.Popup().setHTML(mapMarker.title))
           .addTo(map.current!);
